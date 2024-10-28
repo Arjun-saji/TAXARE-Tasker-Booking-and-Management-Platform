@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+<script src="script.js"></script>
+
+</head>
+<body>
+ 
+  <!-- Main -->
+  <div class="container mt-4">
+    <!-- <h1>Bicycle Rental!</h1>
+    <p>Rent a bicycle and explore the city.</p> -->
+     <div class="row py-5">
+    <div class="col-lg-9 mx-auto text-white text-center">
+  </div>
+    <div class="col-lg-8 mx-auto">
+        <form action="">
+          <div class="input-group mb-4 border rounded-pill p-1" style="">
+            <input type="search" placeholder="What do you need help with ?" aria-describedby="button-addon3" class="form-control bg-none border-0">
+            <div class="input-group-append border-0">
+              <button id="button-addon3" type="button" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </form>
+    </div> 
+</div>
+
+    <!-- Rental Form -->
+  <!--   <form id="rental-form">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="destination" class="form-label">Destination</label>
+          <select class="form-select" id="destination" required>
+            <option selected disabled>Select your destination</option>
+            <option value="1">City Tour</option>
+            <option value="2">Mountain Trail</option>
+            <option value="3">Beach Ride</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="bike" class="form-label">Bike Type</label>
+          <select class="form-select" id="bike" required>
+            <option selected disabled>Select a bike</option>
+            <option value="1">Mountain Bike</option>
+            <option value="2">Road Bike</option>
+            <option value="3">City Bike</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="price" class="form-label">Price Range</label>
+          <select class="form-select" id="price" required>
+            <option selected disabled>Select a price range</option>
+            <option value="1">$10 - $20</option>
+            <option value="2">$20 - $30</option>
+            <option value="3">$30 - $40</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-primary mt-4"><i class="fas fa-bicycle me-2"></i>Rent Now</button>
+        </div>
+      </div>
+    </form> -->
+
+    <!-- Submission Result -->
+    <div class="submission-result">
+      <h3>Congratulations!</h3>
+      <p>Thank you for your rental submission. Please wait for our team to contact you shortly.</p>
+    </div>
+
+    <!-- Bicycle Photos -->
+    <div class="row mt-4">
+        {% for i in services %}
+      <div class="col-md-4">
+       
+        <div class="rental-card">
+         
+          <img src="https://www.herocycles.com/on/demandware.static/-/Sites-HeroCycles-Library/default/dweac805fd/PLP/Topbanner/MTB.jpg" class="img-fluid" alt="Mountain Bike">
+          <div class="card-body">
+            <h5 class="card-title" style="padding-left: 90px"><strong>{{i.name}}</strong></h5>
+            <p class="card-text" style="padding-left: 60px">starting at <strong>{{i.price}}</strong></p>
+            <a href="{% url 'singlecust' i.id %}" class="btn btn-primary bike-details-toggle" data-bike="mountain-bike"><i class="fas fa-info-circle me-2"></i>Details</a>
+            <div class="bike-details" id="mountain-bike-details">
+              <p>{{i.description}}</p>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+      {% endfor %}
+    </div>
+    
+  </div>
+ 
+  <style type="text/css">
+
+.row.py-5 {
+    padding-top: 900px;
+}
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control-underlined {
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+
+
+.form-control::placeholder {
+  font-size: 0.95rem;
+  color: #aaa;
+  font-style: italic;
+  padding-left: 80;
+}
+
+body {
+  background-image: url('https://cdn.pixabay.com/photo/2023/04/30/07/50/bicycle-7959976_1280.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 50vh;
+}
+
+.submission-result {
+  display: none;
+}
+
+.submission-result.show {
+  display: block;
+  animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bike-details {
+  display: none;
+}
+
+.bike-details.show {
+  display: block;
+}
+
+
+.rental-card {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #dfe6f1;
+}
+
+.bike-details-toggle {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.bike-details-toggle:hover {
+  background-color: #0056b3;
+}
+
+.bike-details {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+img.img-fluid {
+    height: 220px;
+}
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 40px;
+  color: #007bff;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-image: linear-gradient(to right, #007bff, #00bfff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientAnimation 3s linear infinite;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h1::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 50px;
+  background-color: #007bff;
+  margin: 10px 0;
+}
+
+
+/* Rentals */
+
+#rental-form {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-label {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.form-control {
+  background-color: #fff;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.form-select {
+  background-color: #fff;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-primary i {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="script.js"></script>
+
+  <script type="text/javascript">
+    // Handle form submission
+const rentalForm = document.getElementById('rental-form');
+const submissionResult = document.querySelector('.submission-result');
+
+rentalForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Get form values
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const destination = document.getElementById('destination').value;
+  const bike = document.getElementById('bike').value;
+  const price = document.getElementById('price').value;
+
+  // Display submission result
+  submissionResult.classList.add('show');
+  rentalForm.reset();
+});
+
+// Handle bike details toggle
+const bikeDetailsToggle = document.querySelectorAll('.bike-details-toggle');
+bikeDetailsToggle.forEach(function(element) {
+  element.addEventListener('click', function(e) {
+    e.preventDefault();
+    const bikeId = this.getAttribute('data-bike');
+    const bikeDetails = document.getElementById(bikeId + '-details');
+    bikeDetails.classList.toggle('show');
+  });
+});
+
+  </script>
+</body>
+
+
+</html>
